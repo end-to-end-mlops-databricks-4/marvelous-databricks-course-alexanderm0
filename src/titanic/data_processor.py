@@ -1,7 +1,5 @@
 """Data preprocessing module."""
 
-import json
-
 import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, to_utc_timestamp
