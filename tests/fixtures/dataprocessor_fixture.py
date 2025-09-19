@@ -5,8 +5,8 @@ import pytest
 from loguru import logger
 from pyspark.sql import SparkSession
 
-from src.titanic import PROJECT_DIR
-from src.titanic.config import ProjectConfig, Tags
+from titanic import PROJECT_DIR
+from titanic.config import ProjectConfig, Tags
 
 # from databricks.connect import SparkSession
 

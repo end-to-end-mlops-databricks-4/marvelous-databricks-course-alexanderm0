@@ -1,0 +1,34 @@
+prd:
+  catalog_name: mlops_dev
+  schema_name: alexande
+acc:
+  catalog_name: mlops_dev
+  schema_name: alexande
+dev:
+  catalog_name: mlops_dev
+  schema_name: alexande
+
+experiment_name: /Shared/titanic
+experiment_name_basic: /Shared/titanic-basic
+experiment_name_custom: /Shared/house-prices-custom
+experiment_name_fe: /Shared/house-prices-fe
+
+parameters:
+  learning_rate: 0.01
+  n_estimators: 1000
+  max_depth: 6
+
+num_features:
+  - Age
+  - SibSp
+  - Parch
+  - Fare
+
+cat_features:
+  - Pclass
+  - Sex
+  - Embarked
+  - Cabin
+  - Ticket
+
+target: Survived
