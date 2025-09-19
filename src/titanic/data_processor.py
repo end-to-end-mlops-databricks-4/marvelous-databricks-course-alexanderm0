@@ -28,24 +28,24 @@ class DataProcessor:
 
         This method handles missing values, converts data types, and performs feature engineering.
         """
-        processed = []
+        # 1. Drop columns not needed for simple model
+        self.df.drop(columns=["Name", "Ticket", "Cabin"], inplace=True, errors="ignore")
 
-        for _, row in self.df.iterrows():
-            ocr_text = row["OCRed Text"]
-            json_data = row["Json Data"]
+        # 2. Fill missing numeric values
+        self.df["Age"].fillna(self.df["Age"].median(), inplace=True)
+        self.df["Fare"].fillna(self.df["Fare"].median(), inplace=True)
 
-            # Extract only the "items" key as the label, empty if not present
-            label = {"items": json_data.get("items", [])}
+        # 3. Fill missing categorical values with highest frequency value
+        self.df["Embarked"].fillna(self.df["Embarked"].mode()[0], inplace=True)
 
-            processed.append(
-                {
-                    "input_text": ocr_text,
-                    "target_text": json.dumps(label, ensure_ascii=False),
-                }
-            )
-        self.df = pd.DataFrame(processed)
-        self.df["input_text"] = self.df["input_text"].astype(str)
-        self.df["target_text"] = self.df["target_text"].astype(str)
+        # 4. Encode sex as binary and one-hot encode Embarked
+        self.df["Sex"] = self.df["Sex"].map({"male": 0, "female": 1}).astype(int)
+        self.df = pd.get_dummies(self.df, columns=["Embarked"], drop_first=True)
+
+        # 5. (Optional) Reset index
+        self.df.reset_index(drop=True, inplace=True)
+
+        return self.df
 
     def split_data(
         self, test_size: float = 0.2, random_state: int = 42
