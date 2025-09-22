@@ -1,6 +1,6 @@
 # 🛠 Taskfile Introduction
 
-This project uses [`Taskfile`](https://taskfile.dev/) to automate common development, testing, and deployment workflows.  
+This project uses [`Taskfile`](https://taskfile.dev/) to automate common development, testing, and deployment workflows.
 `Taskfile.yml` acts like a Makefile but with modern syntax, dependency resolution, and cross-platform support.
 
 ---

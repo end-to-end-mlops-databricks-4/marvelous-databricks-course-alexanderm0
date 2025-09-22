@@ -32,9 +32,7 @@ class ProjectConfig(BaseModel):
         :return: ProjectConfig instance initialized with parsed configuration
         """
         if env not in ["prd", "acc", "dev"]:
-            raise ValueError(
-                f"Invalid environment: {env}. Expected 'prd', 'acc', or 'dev'"
-            )
+            raise ValueError(f"Invalid environment: {env}. Expected 'prd', 'acc', or 'dev'")
 
         with open(config_path) as f:
             config_dict = yaml.safe_load(f)

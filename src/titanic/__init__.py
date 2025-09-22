@@ -21,11 +21,7 @@ def get_version() -> str:
         return importlib.metadata.version(__package__)
     except importlib.metadata.PackageNotFoundError:
         # If not installed, read from the version.txt file
-        with (
-            importlib.resources.files(__package__)
-            .joinpath("../../version.txt")
-            .open("r", encoding="utf-8") as file
-        ):
+        with importlib.resources.files(__package__).joinpath("../../version.txt").open("r", encoding="utf-8") as file:
             return file.read().strip()
 
 

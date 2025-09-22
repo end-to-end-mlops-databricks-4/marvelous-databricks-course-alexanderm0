@@ -14,9 +14,7 @@ class DataProcessor:
     This class handles data preprocessing, splitting, and saving to Databricks tables.
     """
 
-    def __init__(
-        self, pandas_df: pd.DataFrame, config: ProjectConfig, spark: SparkSession
-    ) -> None:
+    def __init__(self, pandas_df: pd.DataFrame, config: ProjectConfig, spark: SparkSession) -> None:
         self.df = pandas_df  # Store the DataFrame as self.df
         self.config = config  # Store the configuration
         self.spark = spark
@@ -27,7 +25,7 @@ class DataProcessor:
         This method handles missing values, converts data types, and performs feature engineering.
         """
         # 1. Drop columns not needed for simple model
-        self.df.drop(columns=["Name", "Ticket", "Cabin"], inplace=True, errors="ignore")
+        self.df.drop(columns=["PassengerId", "Name", "Ticket", "Cabin"], inplace=True, errors="ignore")
 
         # 2. Fill missing numeric values
         self.df["Age"].fillna(self.df["Age"].median(), inplace=True)
@@ -45,18 +43,14 @@ class DataProcessor:
 
         return self.df
 
-    def split_data(
-        self, test_size: float = 0.2, random_state: int = 42
-    ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    def split_data(self, test_size: float = 0.2, random_state: int = 42) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Split the DataFrame (self.df) into training and test sets.
 
         :param test_size: The proportion of the dataset to include in the test split.
         :param random_state: Controls the shuffling applied to the data before applying the split.
         :return: A tuple containing the training and test DataFrames.
         """
-        train_set, test_set = train_test_split(
-            self.df, test_size=test_size, random_state=random_state
-        )
+        train_set, test_set = train_test_split(self.df, test_size=test_size, random_state=random_state)
         return train_set, test_set
 
     def save_to_catalog(self, train_set: pd.DataFrame, test_set: pd.DataFrame) -> None:
