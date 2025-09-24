@@ -23,11 +23,13 @@ num_features:
   - SibSp
   - Parch
   - Fare
+  - Pclass
 
 cat_features:
-  - Pclass
   - Sex
-  - Embarked
+  - Embarked_S
+  - Embarked_Q
+  - Embarked_C
 
 id_col: PassengerId
 target: Survived

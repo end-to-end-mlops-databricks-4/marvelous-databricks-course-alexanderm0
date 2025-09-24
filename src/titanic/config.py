@@ -16,6 +16,7 @@ class ProjectConfig(BaseModel):
     num_features: list[str]
     cat_features: list[str]
     target: str
+    id_col: str
     catalog_name: str
     schema_name: str
     parameters: dict[str, Any]

@@ -36,10 +36,7 @@ class DataProcessor:
 
         # 4. Encode sex as binary and one-hot encode Embarked
         self.df["Sex"] = self.df["Sex"].map({"male": 0, "female": 1}).astype(int)
-        self.df = pd.get_dummies(self.df, columns=["Embarked"], drop_first=True)
-
-        # 5. (Optional) Reset index
-        self.df.reset_index(drop=True, inplace=True)
+        self.df = pd.get_dummies(self.df, columns=["Embarked"], drop_first=False)
 
         return self.df
 

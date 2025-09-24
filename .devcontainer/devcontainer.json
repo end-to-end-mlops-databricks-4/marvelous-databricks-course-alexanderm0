@@ -28,9 +28,6 @@
         "charliermarsh.ruff",
         "databricks.databricks"
       ]
-    },
-    "mounts": [
-      "source=${localWorkspaceFolder},target=/workspaces/mlops-course,type=bind"
-    ]
+    }
   }
 }
