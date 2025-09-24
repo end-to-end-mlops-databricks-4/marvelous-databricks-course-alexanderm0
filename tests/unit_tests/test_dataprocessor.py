@@ -58,7 +58,7 @@ def test_preprocess(sample_data: pd.DataFrame, config: ProjectConfig, spark_sess
     processor.preprocess()
     df = processor.df
 
-    expected_columns = config.cat_features + config.num_features + [config.target]
+    expected_columns = list(config.cat_features + config.num_features + [config.target, config.id_col])
     assert list(df.columns) == expected_columns
 
     for col in config.num_features:
@@ -86,8 +86,8 @@ def test_split_data(sample_data: pd.DataFrame, config: ProjectConfig, spark_sess
     expected_test_size = int(total_rows * 0.3)
     assert abs(len(test_df) - expected_test_size) <= 1
 
-    train_ids = set(train_df["customerID"])
-    test_ids = set(test_df["customerID"])
+    train_ids = set(train_df["PassengerId"])
+    test_ids = set(test_df["PassengerId"])
     assert train_ids.isdisjoint(test_ids)
 
 

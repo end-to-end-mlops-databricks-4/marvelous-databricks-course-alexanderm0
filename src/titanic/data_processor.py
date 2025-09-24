@@ -25,7 +25,7 @@ class DataProcessor:
         This method handles missing values, converts data types, and performs feature engineering.
         """
         # 1. Drop columns not needed for simple model
-        self.df.drop(columns=["PassengerId", "Name", "Ticket", "Cabin"], inplace=True, errors="ignore")
+        self.df.drop(columns=["Name", "Ticket", "Cabin"], inplace=True, errors="ignore")
 
         # 2. Fill missing numeric values
         self.df["Age"].fillna(self.df["Age"].median(), inplace=True)

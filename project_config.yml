@@ -29,4 +29,5 @@ cat_features:
   - Sex
   - Embarked
 
+id_col: PassengerId
 target: Survived
