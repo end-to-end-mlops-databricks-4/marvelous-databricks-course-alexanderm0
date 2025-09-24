@@ -99,3 +99,5 @@ dmypy.json
 #data
 data
 .databricks
+
+.ruff_cache/
