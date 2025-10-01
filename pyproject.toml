@@ -15,13 +15,13 @@ dependencies = [
     "databricks-sdk==0.55.0",
     "pydantic==2.11.7",
     "loguru==0.7.3",
-    "python-dotenv==1.1.1",
+    "python-dotenv==1.1.1"
 ]
 
 dynamic = ['version']
 
 [project.optional-dependencies]
-dev = ["databricks-connect==16.4.5",
+dev = ["databricks-connect==16.4",
        "ipykernel>=6.29.5, <7",
        "pip>=25.0.1, <26",
        "pre-commit>=4.1.0, <5"]
@@ -36,11 +36,9 @@ requires = [
   "setuptools>=72.0"]
 build-backend = "setuptools.build_meta"
 
-
 [tool.setuptools.packages.find]
 where =["src"]
-include = ["titanic*", "marvel_characters*"]
-
+include = ["churn*", "marvel_characters*"]
 
 [tool.setuptools.dynamic]
 version = { file = "version.txt" }
