@@ -41,7 +41,7 @@ run_id = mlflow.search_runs(
     filter_string="tags.branch='week2'",
 ).run_id[0]
 
-model = mlflow.sklearn.load_model(f"runs:/{run_id}/logistic-regression-pipeline-model")
+model = mlflow.sklearn.load_model(f"runs:/{run_id}/xgb-classifier-pipeline-model")
 
 # COMMAND ----------
 # Retrieve dataset for the current run

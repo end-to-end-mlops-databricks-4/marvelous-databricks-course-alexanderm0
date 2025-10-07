@@ -29,7 +29,9 @@ def test_data_ingestion(sample_data: pd.DataFrame) -> None:
 
 def test_invalid_env_raises_value_error() -> None:
     """Tests whether ValueError is thrown in case of invalid environment."""
-    with pytest.raises(ValueError, match="Invalid environment: test. Expected 'prd', 'acc', or 'dev'"):
+    with pytest.raises(
+        ValueError, match="Invalid environment: test. Expected 'prd', 'acc', or 'dev'"
+    ):
         ProjectConfig.from_yaml(PROJECT_DIR / "project_config.yaml", env="test")
 
 
@@ -52,21 +54,27 @@ def test_dataprocessor_init(
     # assert isinstance(processor.spark, SparkSession)
 
 
-def test_preprocess(sample_data: pd.DataFrame, config: ProjectConfig, spark_session: SparkSession) -> None:
+def test_preprocess(
+    sample_data: pd.DataFrame, config: ProjectConfig, spark_session: SparkSession
+) -> None:
     """Test whether preprocessing happens correctly."""
     processor = DataProcessor(pandas_df=sample_data, config=config, spark=spark_session)
     processor.preprocess()
     df = processor.df
     print(df.dtypes)
 
-    expected_columns = list(config.cat_features + config.num_features + [config.target, config.id_col])
+    expected_columns = list(
+        config.cat_features + config.num_features + [config.target, config.id_col]
+    )
     assert sorted(df.columns.tolist()) == sorted(expected_columns)
 
     for col in config.num_features:
         assert not df[col].isnull().any()
 
 
-def test_split_data(sample_data: pd.DataFrame, config: ProjectConfig, spark_session: SparkSession) -> None:
+def test_split_data(
+    sample_data: pd.DataFrame, config: ProjectConfig, spark_session: SparkSession
+) -> None:
     """Test whether splitting of data happens correctly."""
     processor = DataProcessor(pandas_df=sample_data, config=config, spark=spark_session)
     processor.preprocess()
@@ -107,5 +115,9 @@ def test_save_to_catalog_succesfull(
     processor.enable_change_data_feed()
 
     # Assert
-    assert spark_session.catalog.tableExists(f"{config.catalog_name}.{config.schema_name}.train_set")
-    assert spark_session.catalog.tableExists(f"{config.catalog_name}.{config.schema_name}.test_set")
+    assert spark_session.catalog.tableExists(
+        f"{config.catalog_name}.{config.schema_name}.train_set"
+    )
+    assert spark_session.catalog.tableExists(
+        f"{config.catalog_name}.{config.schema_name}.test_set"
+    )

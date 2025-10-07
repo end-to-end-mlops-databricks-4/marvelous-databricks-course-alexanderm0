@@ -9,8 +9,7 @@ from titanic.data_processor import DataProcessor
 
 spark = DatabricksSession.builder.getOrCreate()
 
-config = ProjectConfig.from_yaml(
-    config_path="../project_config.yml", env="dev")
+config = ProjectConfig.from_yaml(config_path="../project_config.yml", env="dev")
 
 logger.info("Configuration loaded:")
 logger.info(yaml.dump(config, default_flow_style=False))
