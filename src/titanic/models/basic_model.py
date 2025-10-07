@@ -8,10 +8,10 @@ from mlflow import MlflowClient
 from mlflow.data.dataset_source import DatasetSource
 from mlflow.models import infer_signature
 from pyspark.sql import SparkSession
-from sklearn.base import accuracy_score
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
+    accuracy_score,
     f1_score,
     precision_score,
     recall_score,
@@ -135,19 +135,19 @@ class BasicModel:
                 }
             )
 
-        # Log the model
-        signature = infer_signature(model_input=self.X_train, model_output=y_pred)
-        dataset = mlflow.data.from_spark(
-            self.train_set_spark,
-            table_name=f"{self.catalog_name}.{self.schema_name}.train_set",
-            version=self.data_version,
-        )
-        mlflow.log_input(dataset, context="training")
-        mlflow.sklearn.log_model(
-            sk_model=self.pipeline,
-            artifact_path="logistic-regression-pipeline-model",
-            signature=signature,
-        )
+            # Log the model
+            signature = infer_signature(model_input=self.X_train, model_output=y_pred)
+            dataset = mlflow.data.from_spark(
+                self.train_set_spark,
+                table_name=f"{self.catalog_name}.{self.schema_name}.train_set",
+                version=self.data_version,
+            )
+            mlflow.log_input(dataset, context="training")
+            mlflow.sklearn.log_model(
+                sk_model=self.pipeline,
+                artifact_path="logistic-regression-pipeline-model",
+                signature=signature,
+            )
 
     def register_model(self) -> None:
         """Register model in Unity Catalog."""

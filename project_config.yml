@@ -8,15 +8,15 @@ dev:
   catalog_name: mlops_dev
   schema_name: alexande
 
-experiment_name: /Shared/titanic
-experiment_name_basic: /Shared/titanic-basic
-experiment_name_custom: /Shared/house-prices-custom
-experiment_name_fe: /Shared/house-prices-fe
+experiment_name: /Users/alexander.mo.dong@gmail.com/titanic
+experiment_name_basic: /Users/alexander.mo.dong@gmail.com/titanic-basic
+experiment_name_custom: /Users/alexander.mo.dong@gmail.com/titanic-custom
+experiment_name_fe: /Users/alexander.mo.dong@gmail.com/house-prices-fe
 
 parameters:
-  learning_rate: 0.01
-  n_estimators: 1000
-  max_depth: 6
+  C: 0.01
+  tol: 0.0001
+  penalty: 'l2'
 
 num_features:
   - Age
