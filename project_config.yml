@@ -14,9 +14,14 @@ experiment_name_custom: /Users/alexander.mo.dong@gmail.com/titanic-custom
 experiment_name_fe: /Users/alexander.mo.dong@gmail.com/house-prices-fe
 
 parameters:
-  C: 0.01
-  tol: 0.0001
-  penalty: 'l2'
+  lr:
+    C: 0.1
+    tol: 0.01
+    penalty: 'l2'
+  xgb:
+    n_estimators: 10
+    max_depth: 6
+    learning_rate: 0.01
 
 num_features:
   - Age

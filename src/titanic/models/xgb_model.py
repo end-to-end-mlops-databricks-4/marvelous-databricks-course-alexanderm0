@@ -9,7 +9,6 @@ from mlflow.data.dataset_source import DatasetSource
 from mlflow.models import infer_signature
 from pyspark.sql import SparkSession
 from sklearn.compose import ColumnTransformer
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     accuracy_score,
     f1_score,
@@ -19,11 +18,12 @@ from sklearn.metrics import (
 )
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
+from xgboost import XGBClassifier
 
 from titanic.config import ProjectConfig, Tags
 
 
-class BasicModel:
+class XGBClassifierModel:
     """A basic model class for house price prediction using LightGBM.
 
     This class handles data loading, feature preparation, model training, and MLflow logging.
@@ -43,12 +43,12 @@ class BasicModel:
         self.num_features = self.config.num_features
         self.cat_features = self.config.cat_features
         self.target = self.config.target
-        self.parameters = self.config.parameters
+        self.parameters = self.config.parameters["xgb"]
         self.catalog_name = self.config.catalog_name
         self.schema_name = self.config.schema_name
         self.experiment_name = self.config.experiment_name_basic
         self.model_name = (
-            f"{self.catalog_name}.{self.schema_name}.titanic_model_logistic_regression"
+            f"{self.catalog_name}.{self.schema_name}.titanic_model_xgb_classifier"
         )
         self.tags = tags.model_dump()
 
@@ -90,7 +90,7 @@ class BasicModel:
         self.pipeline = Pipeline(
             steps=[
                 ("preprocessor", self.preprocessor),
-                ("classifier", LogisticRegression(**self.parameters)),
+                ("classifier", XGBClassifier(**self.parameters)),
             ]
         )
         logger.info("✅ Preprocessing pipeline defined.")
@@ -101,7 +101,7 @@ class BasicModel:
         self.pipeline.fit(self.X_train, self.y_train)
 
     def log_model(self) -> None:
-        """Log the logistic regression model performance on the test set using MLflow."""
+        """Log the xgbclassifier model performance on the test set using MLflow."""
         mlflow.set_experiment(self.experiment_name)
         with mlflow.start_run(tags=self.tags) as run:
             self.run_id = run.info.run_id
@@ -123,7 +123,7 @@ class BasicModel:
             logger.info(f"📊 ROC AUC: {roc_auc}")
 
             # Log parameters and metrics
-            mlflow.log_param("model_type", "Logistic Regression with preprocessing")
+            mlflow.log_param("model_type", "xgbclassifier with preprocessing")
             mlflow.log_params(self.parameters)
             mlflow.log_metrics(
                 {
@@ -145,7 +145,7 @@ class BasicModel:
             mlflow.log_input(dataset, context="training")
             mlflow.sklearn.log_model(
                 sk_model=self.pipeline,
-                artifact_path="logistic-regression-pipeline-model",
+                artifact_path="xgb-classifier-pipeline-model",
                 signature=signature,
             )
 
@@ -153,7 +153,7 @@ class BasicModel:
         """Register model in Unity Catalog."""
         logger.info("🔄 Registering the model in UC...")
         registered_model = mlflow.register_model(
-            model_uri=f"runs:/{self.run_id}/logistic-regression-pipeline-model",
+            model_uri=f"runs:/{self.run_id}/xgb-classifier-pipeline-model",
             name=self.model_name,
             tags=self.tags,
         )

@@ -19,7 +19,7 @@ class ProjectConfig(BaseModel):
     id_col: str
     catalog_name: str
     schema_name: str
-    parameters: dict[str, Any]
+    parameters: dict[str, dict[str, Any]]
     experiment_name_basic: str | None
     experiment_name_custom: str | None
     experiment_name_fe: str | None
