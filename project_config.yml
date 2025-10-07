@@ -1,0 +1,38 @@
+prd:
+  catalog_name: mlops_dev
+  schema_name: alexande
+acc:
+  catalog_name: mlops_dev
+  schema_name: alexande
+dev:
+  catalog_name: mlops_dev
+  schema_name: alexande
+
+experiment_name: /Users/alexander.mo.dong@gmail.com/titanic
+experiment_name_basic: /Users/alexander.mo.dong@gmail.com/titanic-basic
+experiment_name_custom: /Users/alexander.mo.dong@gmail.com/titanic-custom
+experiment_name_fe: /Users/alexander.mo.dong@gmail.com/house-prices-fe
+
+parameters:
+  lr:
+    C: 0.1
+    tol: 0.01
+    penalty: 'l2'
+  xgb:
+    n_estimators: 10
+    max_depth: 6
+    learning_rate: 0.01
+
+num_features:
+  - Age
+  - SibSp
+  - Parch
+  - Fare
+  - Pclass
+
+cat_features:
+  - Sex
+  - Embarked
+
+id_col: PassengerId
+target: Survived

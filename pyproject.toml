@@ -10,18 +10,19 @@ dependencies = [
     "pandas==2.3.0",
     "pyarrow==17.0.0",
     "scikit-learn==1.7.0",
-    "lightgbm==4.6.0",
     "scipy==1.16.0",
-    "databricks-sdk==0.55.0",
+    "databricks-sdk==0.62.0",
     "pydantic==2.11.7",
     "loguru==0.7.3",
     "python-dotenv==1.1.1",
+    "boto3>=1.40.46",
+    "xgboost>=3.0.5",
 ]
 
 dynamic = ['version']
 
 [project.optional-dependencies]
-dev = ["databricks-connect>=16.0, <17",
+dev = ["databricks-connect==16.4",
        "ipykernel>=6.29.5, <7",
        "pip>=25.0.1, <26",
        "pre-commit>=4.1.0, <5"]
@@ -29,18 +30,16 @@ dev = ["databricks-connect>=16.0, <17",
 test = ["pre-commit>=4.1.0, <5",
        "pytest>=8.0.0, <9",
        "pytest-cov>=5.0.0, <6",
-       "pyspark>=3.4.0, <4"]
+       "pyspark == 4.0.1"]
 
 [build-system]
 requires = [
   "setuptools>=72.0"]
 build-backend = "setuptools.build_meta"
 
-
 [tool.setuptools.packages.find]
 where =["src"]
-include = ["house_price*", "marvel_characters*"]
-
+include = ["titanic*", "marvel_characters*"]
 
 [tool.setuptools.dynamic]
 version = { file = "version.txt" }
